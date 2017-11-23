@@ -11,13 +11,10 @@ export class UserService {
 
   constructor(private http: Http) { }
 
+  /* Effectue la requête getUsers de l'api JAX-RS
+  *  renvoie la liste des utilisateurs présent dans la BD */
   getUsers(): Observable<User[]> {
     return this.http.get(`${this.baseUrl}`)
-      .map(response => response.json());
-  }
-
-  createUser(user: User): Observable<User[]> {
-    return this.http.post(`${this.baseUrl}/new-user`, user)
       .map(response => response.json());
   }
 }

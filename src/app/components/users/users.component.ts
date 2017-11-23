@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../interfaces/user';
 import {UserService} from '../../services/user.service';
 
+
+/* User Component
+ * ------------------
+ * Attributs :
+ * - users, liste des users fournie à l'initialisation du component par la méthode getUsers de UserService
+ * - selectedUser, User définit par l'utilisateur lors d'un event click sur la liste users
+ * Methodes :
+ * - getUsers, utlisateurs récupérés par le service UserService sur la BD mySql attribués à users
+ * - onSelect, attribut User choisit à selectUser
+ * ------------------ */
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -11,17 +21,16 @@ export class UsersComponent implements OnInit {
 
   users: User[] = [];
   selectedUser: User;
-  isNewUser: boolean;
 
   constructor(private userService: UserService) {}
 
-  getTrains(): void {
+  getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => this.users = users);
   }
 
   ngOnInit(): void {
-    this.getTrains();
+    this.getUsers();
   }
 
   onSelect(user: User): void {
