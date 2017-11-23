@@ -1,0 +1,14 @@
+<ul class="users">
+  <li *ngFor="let user of users"
+      (click)="onSelect(user)"
+      [class.selected]="user === selectedUser">
+    <span class="id">{{user.id}}</span> {{user.login}}
+  </li>
+</ul>
+
+
+<div *ngIf="selectedUser">
+  <h3>
+    {{selectedUser.login}}
+  </h3>
+</div>
