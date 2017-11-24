@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {UserService} from '../../services/user.service';
-import {forEach} from '@angular/router/src/utils/collection';
 
 
 /* User Component
@@ -21,11 +20,15 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class UsersComponent implements OnInit {
 
   users: User[] = [];
-  selectedUser: User;
-  maxRank: number = 0;
+  selectedUser: User = null;
+  maxRank = 0;
   @Output() eventEmitter = new EventEmitter();
 
   constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.getUsers();
+  }
 
   getUsers(): void {
     this.userService.getUsers()
@@ -37,10 +40,6 @@ export class UsersComponent implements OnInit {
     } );
   }
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
-
   onSelect(user: User): void {
     this.selectedUser = user;
     for (let i = 0; i < this.users.length; i++) {
@@ -50,17 +49,20 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  changeRank(newRank: number): void {
-    this.selectedUser.rank = newRank;
-    this.userService.updateUser(this.selectedUser)
-      .subscribe(response => this.eventEmitter.emit(this.selectedUser));
-  }
-
-  deleteUser(): void {
-    this.userService.deleteUser(this.selectedUser.id)
+  deleteUser(selectedUserId: number): void {
+    this.userService.deleteUser(selectedUserId)
       .subscribe(response => {
         this.users = this.users.filter(user => user.id !== this.selectedUser.id);
         this.selectedUser = null;
       });
   }
+
+  goToHome() {
+    window.location.href = 'http://localhost:8080/projet-final-1.0-SNAPSHOT';
+  }
+
+  changeSelectedUser(user: User) {
+    this.selectedUser = user;
+  }
+
 }

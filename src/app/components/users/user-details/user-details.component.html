@@ -1,0 +1,18 @@
+<div class="conteneur">
+  <h2>{{selectedUser.login}} details</h2>
+  <div>
+    <label> Login : </label> {{selectedUser.login}}
+  </div>
+  <div>
+    <label> Email : </label> {{selectedUser.email}}
+  </div>
+  <div>
+    <label> Rank : </label> <input #newRank type="number"
+                                   min="1" max="{{maxRank}}" value="{{selectedUser.rank}}">
+    <button (click)="changeRank(newRank.value)">Change Rank</button>
+  </div>
+  <div>
+    <button (click)="hide()">Hide details</button>
+    <button class="delete" (click)="deleteUser()">Delete User</button>
+  </div>
+</div>

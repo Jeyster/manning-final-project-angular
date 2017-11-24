@@ -6,22 +6,17 @@
   </li>
 </ul>
 
+<app-user-details *ngIf="selectedUser"
+                  [maxRank]="maxRank"
+                  [selectedUser]="selectedUser"
+                  (changeSelectedUser)="changeSelectedUser($event)">
+</app-user-details>
 
-<div *ngIf="selectedUser">
-  <div>
-    <label> Login : </label> {{selectedUser.login}}
-  </div>
-  <div>
-    <label> Email : </label> {{selectedUser.email}}
-  </div>
-  <div>
-    <label> Rank : </label> <input #newRank type="number"
-             min="1" max="{{maxRank}}" value="{{selectedUser.rank}}">
-    <button (click)="changeRank(newRank.value)">Change Rank</button>
-  </div>
-  <div>
-    <button class="delete" (click)="deleteUser()">Delete User</button>
-  </div>
+<div>
+  <button class="home" (click)="createUser()">Add a user</button>
+  <button class="home" (click)="goToHome()">
+    Home
+  </button>
 </div>
 
 
