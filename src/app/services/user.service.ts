@@ -18,4 +18,9 @@ export class UserService {
       .map(response => response.json());
   }
 
+  updateUser(selectedUser: User): Observable<User> {
+    return this.http.post(`${this.baseUrl}/update`, selectedUser)
+      .map(response => response.json());
+  }
+
 }

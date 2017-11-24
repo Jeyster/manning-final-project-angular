@@ -51,11 +51,9 @@ export class UsersComponent implements OnInit {
   }
 
   changeRank(newRank: number): void {
-    /*
-    this.userService.changeRankRequest(this.newRank)
-      .subscribe(response => this.eventEmitter.emit(this.newRank));
-    */
     this.selectedUser.rank = newRank;
+    this.userService.updateUser(this.selectedUser)
+      .subscribe(response => this.eventEmitter.emit(this.selectedUser));
   }
 
 }
