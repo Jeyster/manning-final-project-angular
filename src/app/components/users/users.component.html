@@ -9,18 +9,18 @@
 
 <div *ngIf="selectedUser">
   <div>
-    Login : {{selectedUser.login}}
+    <label> Login : </label> {{selectedUser.login}}
   </div>
   <div>
-    Email : {{selectedUser.email}}
+    <label> Email : </label> {{selectedUser.email}}
   </div>
   <div>
-    Rank : <input #newRank type="number"
+    <label> Rank : </label> <input #newRank type="number"
              min="1" max="{{maxRank}}" value="{{selectedUser.rank}}">
     <button (click)="changeRank(newRank.value)">Change Rank</button>
   </div>
   <div>
-    <button (click)="deleteUser()">Delete User</button>
+    <button class="delete" (click)="deleteUser()">Delete User</button>
   </div>
 </div>
 

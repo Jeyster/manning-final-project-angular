@@ -46,7 +46,7 @@
   border-radius: 4px 0 0 4px;
 }
 
-.users .time {
+.users .badge {
   display: inline-block;
   font-size: small;
   color: white;
@@ -60,3 +60,35 @@
   margin-left: .8em;
   border-radius: 0 4px 4px 0;
 }
+
+label {
+  width: 3em;
+  margin: 0.5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 0px;
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer; cursor: hand;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #ccc;
+  cursor: auto;
+}
+
+button.delete {
+  margin: 0.8em 0.7em 0 0.7em;
+  background-color: #eee;
+  font-weight: bold;
+}
+
