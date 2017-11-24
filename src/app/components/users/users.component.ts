@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {UserService} from '../../services/user.service';
+import {forEach} from '@angular/router/src/utils/collection';
 
 
 /* User Component
@@ -21,12 +22,19 @@ export class UsersComponent implements OnInit {
 
   users: User[] = [];
   selectedUser: User;
+  maxRank: number = 0;
+  @Output() eventEmitter = new EventEmitter();
 
   constructor(private userService: UserService) {}
 
   getUsers(): void {
     this.userService.getUsers()
       .subscribe(users => this.users = users);
+    this.users.forEach(function(currentUser) {
+      if (currentUser.rank > this.maxRank) {
+        this.maxRank = currentUser.rank;
+      }
+    } );
   }
 
   ngOnInit(): void {
@@ -35,6 +43,19 @@ export class UsersComponent implements OnInit {
 
   onSelect(user: User): void {
     this.selectedUser = user;
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].rank > this.maxRank) {
+        this.maxRank = this.users[i].rank;
+      }
+    }
+  }
+
+  changeRank(newRank: number): void {
+    /*
+    this.userService.changeRankRequest(this.newRank)
+      .subscribe(response => this.eventEmitter.emit(this.newRank));
+    */
+    this.selectedUser.rank = newRank;
   }
 
 }

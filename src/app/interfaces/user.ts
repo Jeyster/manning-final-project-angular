@@ -4,6 +4,6 @@ export interface User {
   password: any;
   salt: any;
   email: string;
-  rang: number;
+  rank: number;
   token: string;
 }

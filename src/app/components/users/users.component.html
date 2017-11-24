@@ -15,7 +15,9 @@
     Email : {{selectedUser.email}}
   </div>
   <div>
-    Rank : {{selectedUser.rank}}
+    Rank : <input #newRank type="number"
+             min="1" max="{{maxRank}}" value="{{selectedUser.rank}}">
+    <button (click)="changeRank(newRank.value)">Change Rank</button>
   </div>
 </div>
 
