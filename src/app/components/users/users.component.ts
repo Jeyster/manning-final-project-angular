@@ -56,4 +56,8 @@ export class UsersComponent implements OnInit {
       .subscribe(response => this.eventEmitter.emit(this.selectedUser));
   }
 
+  deleteUser(): void {
+    this.userService.deleteUser(this.selectedUser.id)
+      .subscribe(response => response);
+  }
 }

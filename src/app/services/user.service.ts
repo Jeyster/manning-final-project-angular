@@ -23,4 +23,8 @@ export class UserService {
       .map(response => response.json());
   }
 
+  deleteUser(id: number): Observable<User> {
+    return this.http.delete(`${this.baseUrl}/` + id)
+      .map(response => response.json());
+  }
 }
