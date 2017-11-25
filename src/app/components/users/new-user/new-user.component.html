@@ -1,0 +1,43 @@
+<div class="container" [hidden]="submitted || selectedUser !== null">
+  <h2>New user</h2>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div>
+      <label for="login">Login</label>
+      <input type="text" id="login" required
+             [(ngModel)]="newUser.login" name="login"
+             #login="ngModel">
+      <span [hidden]="login.valid || login.pristine"
+            class="alert alert-danger">
+        Login is required
+      </span>
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input type="text" id="email" required
+             [(ngModel)]="newUser.email" name="email"
+             #email="ngModel">
+      <span [hidden]="email.valid || email.pristine"
+            class="alert alert-danger">
+        Email is required
+      </span>
+    </div>
+
+    <div>
+      <label for="password">Password</label>
+      <input type="text" id="password" required
+             [(ngModel)]="newUser.password" name="password"
+             #password="ngModel">
+      <span [hidden]="password.valid || password.pristine"
+            class="alert alert-danger">
+        Password is required
+      </span>
+    </div>
+
+    <div>
+      <button (click)="hide()">Cancel</button>
+      <button type="submit" class="delete" [disabled]="!userForm.form.valid">Submit</button>
+    </div>
+
+  </form>
+</div>

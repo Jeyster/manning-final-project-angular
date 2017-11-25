@@ -27,4 +27,9 @@ export class UserService {
     return this.http.delete(`${this.baseUrl}/` + id)
       .map(response => response.json());
   }
+
+  createUser(user: User): Observable<User> {
+    return this.http.post(`${this.baseUrl}/new-user`, user)
+      .map(response => response.json());
+  }
 }

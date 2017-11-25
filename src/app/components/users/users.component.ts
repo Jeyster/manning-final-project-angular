@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   selectedUser: User = null;
   maxRank = 0;
+  newUser = false;
   @Output() eventEmitter = new EventEmitter();
 
   constructor(private userService: UserService) {}
@@ -49,6 +50,11 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  addUser(): void {
+    this.selectedUser = null;
+    this.newUser = true;
+  }
+
   deleteUser(selectedUserId: number): void {
     this.userService.deleteUser(selectedUserId)
       .subscribe(response => {
@@ -63,6 +69,10 @@ export class UsersComponent implements OnInit {
 
   changeSelectedUser(user: User) {
     this.selectedUser = user;
+  }
+
+  hideNewUser() {
+    this.newUser = false;
   }
 
 }
