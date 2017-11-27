@@ -10,13 +10,14 @@ import {UserService} from '../../../services/user.service';
 export class NewUserComponent implements OnInit {
 
   newUser: User;
+  passwd: any;
   submitted = false;
   @Input() selectedUser;
   @Output() eventEmitter: EventEmitter<User> = new EventEmitter();
   @Output() hideNewUser: EventEmitter<boolean> = new EventEmitter();
 
 
-  constructor(public service: UserService){ }
+  constructor(public service: UserService) {}
 
   ngOnInit() {
     this.newUser =  {
@@ -28,6 +29,7 @@ export class NewUserComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.newUser.password = new Uint8Array(this.passwd);
     this.service.createUser(this.newUser)
       .subscribe(response => this.eventEmitter.emit(this.newUser));
     this.hideNewUser.emit(this.submitted);

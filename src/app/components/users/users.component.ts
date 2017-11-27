@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {UserService} from '../../services/user.service';
 
@@ -21,8 +21,10 @@ export class UsersComponent implements OnInit {
 
   users: User[] = [];
   selectedUser: User = null;
+  minRank = 1;
   maxRank = 0;
   newUser = false;
+  @Input() loggedInUser;
   @Output() eventEmitter = new EventEmitter();
 
   constructor(private userService: UserService) {}
@@ -43,6 +45,12 @@ export class UsersComponent implements OnInit {
 
   onSelect(user: User): void {
     this.selectedUser = user;
+
+    this.minRank = 1;
+    if ((this.selectedUser !== null) && (this.selectedUser.rank >= this.loggedInUser.rank)) {
+      this.minRank = this.selectedUser.rank;
+    }
+
     for (let i = 0; i < this.users.length; i++) {
       if (this.users[i].rank > this.maxRank) {
         this.maxRank = this.users[i].rank;
@@ -56,7 +64,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(selectedUserId: number): void {
-    this.userService.deleteUser(selectedUserId)
+    this.userService.deleteUserById(selectedUserId)
       .subscribe(response => {
         this.users = this.users.filter(user => user.id !== this.selectedUser.id);
         this.selectedUser = null;

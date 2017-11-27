@@ -18,12 +18,17 @@ export class UserService {
       .map(response => response.json());
   }
 
+  getUserByToken(loggedInUserToken: string) {
+    return this.http.get(`${this.baseUrl}/` + loggedInUserToken)
+      .map(response => response.json());
+  }
+
   updateUser(selectedUser: User): Observable<User> {
     return this.http.post(`${this.baseUrl}/update`, selectedUser)
       .map(response => response.json());
   }
 
-  deleteUser(id: number): Observable<User> {
+  deleteUserById(id: number): Observable<User> {
     return this.http.delete(`${this.baseUrl}/` + id)
       .map(response => response.json());
   }
@@ -32,4 +37,5 @@ export class UserService {
     return this.http.post(`${this.baseUrl}/new-user`, user)
       .map(response => response.json());
   }
+
 }

@@ -7,12 +7,12 @@
     <label> Email : </label> {{selectedUser.email}}
   </div>
   <div>
-    <label> Rank : </label> <input #newRank type="number"
-                                   min="1" max="{{maxRank}}" value="{{selectedUser.rank}}">
+    <label> Rank {{selectedUser.rank}} : </label> <input #newRank type="number"
+                                   min="{{minRank}}" max="{{maxRank}}" value="{{selectedUser.rank}}">
     <button (click)="changeRank(newRank.value)">Change Rank</button>
   </div>
   <div>
     <button (click)="hide()">Hide details</button>
-    <button class="delete" (click)="deleteUser()">Delete User</button>
+    <button *ngIf="selectedUser.rank < loggedInUser.rank" class="delete" (click)="deleteUser()">Delete User</button>
   </div>
 </div>

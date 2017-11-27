@@ -7,18 +7,22 @@
 </ul>
 
 <app-user-details *ngIf="selectedUser"
+                  [loggedInUser]="loggedInUser"
+                  [minRank]="minRank"
                   [maxRank]="maxRank"
                   [selectedUser]="selectedUser"
                   (changeSelectedUser)="changeSelectedUser($event)">
 </app-user-details>
 
+<!--
 <app-new-user *ngIf="newUser"
               [selectedUser]="selectedUser"
               (hideNewUser)="hideNewUser($event)">
 </app-new-user>
+-->
 
 <div>
-  <button class="home" (click)="addUser()">Add a user</button>
+  <!--<button class="home" (click)="addUser()">Add a user</button>-->
   <button class="home" (click)="goToHome()">
     Home
   </button>

@@ -10,7 +10,9 @@ import {User} from '../../../interfaces/user';
 })
 export class UserDetailsComponent implements OnInit {
 
+  @Input() loggedInUser;
   @Input() selectedUser;
+  @Input() minRank;
   @Input() maxRank;
   @Output() changeSelectedUser: EventEmitter<User> = new EventEmitter();
   @Output() newRankEmitter = new EventEmitter();
