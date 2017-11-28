@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../interfaces/user';
 import {UserService} from '../../services/user.service';
 
@@ -6,11 +6,21 @@ import {UserService} from '../../services/user.service';
 /* User Component
  * ------------------
  * Attributs :
- * - users, liste des users fournie à l'initialisation du component par la méthode getUsers de UserService
- * - selectedUser, User définit par l'utilisateur lors d'un event click sur la liste users
+ * - users, liste des users fournie à l'initialisation du component par la méthode getUsers() de UserService
+ * - selectedUser, User attribué lors d'un event click (associé à la méthode onSelect()) sur un user listé
+ * - minRank, rang minimal que peut attribuer l'admin au selectedUser (dépend du rang de celui-ci)
+ *    --> calculé à chaque event click onSelect()
+ * - maxRank, rang maximal parmi la liste des users --> récupéré à l'initialisation du component par getUsers()
+ * - Input loggedInUser, user connecté transmis par l'app component en input
+ * ------------------
  * Methodes :
- * - getUsers, utlisateurs récupérés par le service UserService sur la BD mySql attribués à users
- * - onSelect, attribut User choisit à selectUser
+ * - getUsers(), liste des users récupérée dans la bd par le service UserService qui interroge l'api jaxrs
+ * - onSelect(user), attribut un user choisit dans la liste à selectedUser et calcul minRank
+ * - changeSelectedUser(user), méthode associée à l'event changeSelectedUser du component UserDetails
+ *    --> récupère le selectedUser émit
+ * - deleteUser(userId), supprime le user selectedUser grâce au service UserService qui interroge l'api
+ *    --> mets à jour la liste affiché grâce à un filtre
+ * - goToHome(), méthode associée à un event click sur boutton Home
  * ------------------ */
 @Component({
   selector: 'app-users',
@@ -23,9 +33,8 @@ export class UsersComponent implements OnInit {
   selectedUser: User = null;
   minRank = 1;
   maxRank = 0;
-  newUser = false;
   @Input() loggedInUser;
-  @Output() eventEmitter = new EventEmitter();
+  // newUser = false;
 
   constructor(private userService: UserService) {}
 
@@ -35,32 +44,26 @@ export class UsersComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers()
-      .subscribe(users => this.users = users);
-    this.users.forEach(function(currentUser) {
-      if (currentUser.rank > this.maxRank) {
-        this.maxRank = currentUser.rank;
-      }
-    } );
+      .subscribe(users => {
+        this.users = users;
+        for (let i = 0; i < this.users.length; i++) {
+          if (this.users[i].rank > this.maxRank) {
+            this.maxRank = this.users[i].rank;
+          }
+        }
+      });
   }
 
   onSelect(user: User): void {
     this.selectedUser = user;
-
     this.minRank = 1;
-    if ((this.selectedUser !== null) && (this.selectedUser.rank >= this.loggedInUser.rank)) {
+    if (this.selectedUser.rank >= this.loggedInUser.rank) {
       this.minRank = this.selectedUser.rank;
-    }
-
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].rank > this.maxRank) {
-        this.maxRank = this.users[i].rank;
-      }
     }
   }
 
-  addUser(): void {
-    this.selectedUser = null;
-    this.newUser = true;
+  changeSelectedUser(user: User) {
+    this.selectedUser = user;
   }
 
   deleteUser(selectedUserId: number): void {
@@ -75,12 +78,15 @@ export class UsersComponent implements OnInit {
     window.location.href = 'http://localhost:8080/projet-final-1.0-SNAPSHOT';
   }
 
-  changeSelectedUser(user: User) {
-    this.selectedUser = user;
+  /*
+  addUser(): void {
+    this.selectedUser = null;
+    this.newUser = true;
   }
 
   hideNewUser() {
     this.newUser = false;
   }
+  */
 
 }

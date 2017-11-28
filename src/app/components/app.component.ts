@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../interfaces/user';
 import {UserService} from '../services/user.service';
 
+/* Application Component
+ * ----------------------
+ * Récupère dans l'url de connexion le token du user connecté
+ * Interroge l'api pour récupérer dans la bd le user connecté grâce à son token
+ * ---------------------- */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

@@ -1,3 +1,9 @@
+<!-- Formulaire d'ajout d'un nouveau user affiché conditions respéctées par l'attribut directive [hidden].
+     Soumission par click sur le boutton submit, utilise la directive ngSubmit qui attribut les données saisies dans les inputs
+     au newUser et les identifies par #login/#email/#password.
+     Un message d'alerte apparaît lorsque input valide (valid) ou vide (pristine).
+      -->
+
 <div class="container" [hidden]="submitted || selectedUser !== null">
   <h2>New user</h2>
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">

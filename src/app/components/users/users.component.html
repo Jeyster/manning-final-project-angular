@@ -1,3 +1,4 @@
+<!-- Liste des users avec event click sur chaque user exécutant la méthode onSelect(user) et définissant un selectedUser -->
 <ul class="users">
   <li *ngFor="let user of users"
       (click)="onSelect(user)"
@@ -6,6 +7,9 @@
   </li>
 </ul>
 
+<!-- UserDetails component affiché si selectedUser != null
+     -> transmets au component le loggedInUser, minRank, maxRank et selectedUser
+     -> récupère le selectedUser émit par le component -->
 <app-user-details *ngIf="selectedUser"
                   [loggedInUser]="loggedInUser"
                   [minRank]="minRank"

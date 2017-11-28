@@ -1,14 +1,25 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserService} from '../../../services/user.service';
 import {UsersComponent} from '../users.component';
 import {User} from '../../../interfaces/user';
 
+/* UserDetails Component
+ * Attributs :
+ * - Input loggedInUser, user connecté transmis par le User component (lui-même transmit par l'app component)
+ * - Inputs selectedUser, minRank et maxRank transmis par le User component
+ * - Outputs changeSelectedUser (émet vers User component) et newRankEmitter (émet vers User service)
+ * ------------------
+ * Methodes :
+ * - changeRank(newRank), récupère le rang choisi par l'admin, l'attribue au selectedUser et l'inscrit dans la bd en interrogeant l'api
+ * - deleteUser(), exécute la méthode deleteUser(userId) du User component
+ * - hide(), rend null le selectedUser et transmet l'info au User component
+ * ------------------ */
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent {
 
   @Input() loggedInUser;
   @Input() selectedUser;
@@ -20,9 +31,6 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private userService: UserService, private userComponent: UsersComponent) { }
 
-  ngOnInit() {
-  }
-
   changeRank(newRank: number): void {
     this.selectedUser.rank = newRank;
     this.userService.updateUser(this.selectedUser)
@@ -31,7 +39,6 @@ export class UserDetailsComponent implements OnInit {
 
   deleteUser(): void {
     this.userComponent.deleteUser(this.selectedUser.id)
-    this.selectedUser = null;
   }
 
   hide() {
